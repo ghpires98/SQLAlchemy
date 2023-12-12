@@ -1,11 +1,11 @@
 from sqlalchemy import create_engine
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import declarative_base
 from sqlalchemy import Column, String
 from sqlalchemy.orm import sessionmaker
 
 
 # Configurações
-engine = create_engine('mysql+pymysql://root:adm#123172.20.0.2:3306/sys_ceu')
+engine = create_engine('mysql+pymysql://root:Neosaldina2021@172.20.0.2:3306/sys_ceu')
 Base = declarative_base()
 Session = sessionmaker(bind=engine)
 session = Session()
@@ -28,6 +28,15 @@ class Usuario(Base):
 data_insert = Usuario(nome='Caroline', data_nascimento=('15/05/1990'))
 session.add(data_insert)
 session.commit()
+
+# delete
+
+session.query(Usuario).filter(Usuario.nome== "Gustavo").delete()
+session.commit()
+
+# update
+
+session.query(Usuario).filter(Usuario.nome == "Gustavo").update({"nome": "Henrique"})
 
 # Select
 data = session.query(Usuario).all()
